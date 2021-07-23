@@ -3,7 +3,7 @@ if (localStorage.getItem('bikes')) {
     bikes = JSON.parse(localStorage.getItem("bikes"))
 }
 document.querySelector("#add").addEventListener("click", function (event) {
-    console.log(bikes)
+    
     let bikeId = prompt("Insira o numero ou nome da bicicleta :")
     if (bikeId && bikes.filter(bike => bike.id == bikeId).length==0) {
         let bike = { id: bikeId, state: true }
@@ -27,7 +27,7 @@ document.querySelector("#add").addEventListener("click", function (event) {
 })
 window.addEventListener("load", function (event) {
 
-    console.log(bikes)
+    
     if (bikes) {
         bikes.forEach(bike => {
             if (bike.state === true) {
@@ -92,7 +92,7 @@ function devolver(id) {
     bikes.map(bike => bike.id == id ? bike.state = true : bike)
     localStorage.setItem("bikes", JSON.stringify(bikes))
     let td = document.querySelector(`#a${id}`)
-    console.log(td)
+    
     var i = td.parentNode.rowIndex;
     document.querySelector(td.className == "rented" ? "#rentedTable" : "#fixTable").deleteRow(i)
     let table = document.querySelector("#stockTable")
