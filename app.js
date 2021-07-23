@@ -3,17 +3,17 @@ if (localStorage.getItem('bikes')) {
     bikes = JSON.parse(localStorage.getItem("bikes"))
 }
 document.querySelector("#add").addEventListener("click", function (event) {
-    
-    let bikeId = prompt("Insira o numero ou nome da bicicleta :")
-    if (bikeId && bikes.filter(bike => bike.id == bikeId).length==0) {
+
+    let bikeId = prompt("Insira o numero ou nome da bicicleta sem espaços :")
+    if (bikeId && bikes.filter(bike => bike.id == bikeId).length == 0) {
         let bike = { id: bikeId, state: true }
         bikes.push(bike)
         localStorage.setItem('bikes', JSON.stringify(bikes))
         let table = document.querySelector("#stockTable")
         table.innerHTML += `
-            <tr >
+            <tr class="align-middle text-center">
                 <th scope="row" id="a${bikeId}" class="free">${bikeId}</th>
-                <td>
+                <td >
                     <button value="arrendar" class="btn btn-primary" onclick="arrendar('${bikeId}')" ><img src="https://img.icons8.com/ios/50/ffffff/exit.png" width="20" height="20"/></button>
                     <button value="eliminar" class="btn btn-warning ml-5" onclick="reparar('${bikeId}')"><img width="20" height="20" src="https://img.icons8.com/ios/50/ffffff/wrench--v1.png"/> </button>
                     <button value="eliminar" class="btn btn-danger ml-5" onclick="eliminar('${bikeId}')"><img width="20" height="20"  src="https://img.icons8.com/ios/50/ffffff/delete-trash.png"/> </button>
@@ -27,16 +27,16 @@ document.querySelector("#add").addEventListener("click", function (event) {
 })
 window.addEventListener("load", function (event) {
 
-    
+
     if (bikes) {
         bikes.forEach(bike => {
             if (bike.state === true) {
                 let table = document.querySelector("#stockTable")
                 table.innerHTML += `
-            <tr >
+            <tr class="align-middle text-center">
                 <th scope="row" id="a${bike.id}" class="free">${bike.id}</th>
-                <td>
-                    <button value="arrendar" class="btn btn-primary" onclick="arrendar('${bike.id}')" ><img src="https://img.icons8.com/ios/50/ffffff/exit.png" width="20" height="20"/></button>
+                <td class="" >
+                    <button value="arrendar" class="btn btn-primary " onclick="arrendar('${bike.id}')" ><img src="https://img.icons8.com/ios/50/ffffff/exit.png" width="20" height="20"/></button>
                     <button value="eliminar" class="btn btn-warning ml-5" onclick="reparar('${bike.id}')"><img width="20" height="20" src="https://img.icons8.com/ios/50/ffffff/wrench--v1.png"/> </button>
                     <button value="eliminar" class="btn btn-danger ml-5" onclick="eliminar('${bike.id}')"><img width="20" height="20"  src="https://img.icons8.com/ios/50/ffffff/delete-trash.png"/> </button>
                     </td>
@@ -44,7 +44,7 @@ window.addEventListener("load", function (event) {
             } else if (bike.state === false) {
                 let table = document.querySelector("#rentedTable")
                 table.innerHTML += `
-            <tr >
+            <tr class="align-middle text-center" >
                 <th scope="row" id="a${bike.id}" class="rented">${bike.id}</th>
                 <td>
                     <button value="arrendar" class="btn btn-primary" onclick="devolver('${bike.id}')" ><img src="https://img.icons8.com/material-outlined/48/ffffff/return.png" width="20" height="20"/></button>
@@ -54,7 +54,7 @@ window.addEventListener("load", function (event) {
             } else {
                 let table = document.querySelector("#fixTable")
                 table.innerHTML += `
-            <tr >
+            <tr class="align-middle text-center">
                 <th scope="row" id="a${bike.id}" class="fix">${bike.id}</th>
                 <td>
                     <button value="arrendar" class="btn btn-primary" onclick="devolver('${bike.id}')" ><img src="https://img.icons8.com/material-outlined/48/ffffff/return.png" width="20" height="20"/></button>
@@ -79,7 +79,7 @@ function reparar(id) {
     localStorage.setItem("bikes", JSON.stringify(bikes))
     let table = document.querySelector("#fixTable")
     table.innerHTML += `
-            <tr >
+            <tr class="align-middle text-center">
                 <th scope="row" id="a${id}" class="fix">${id}</th>
                 <td>
                     <button value="arrendar" class="btn btn-primary" onclick="devolver('${id}')" ><img src="https://img.icons8.com/material-outlined/48/ffffff/return.png" width="20" height="20"/></button>
@@ -92,12 +92,12 @@ function devolver(id) {
     bikes.map(bike => bike.id == id ? bike.state = true : bike)
     localStorage.setItem("bikes", JSON.stringify(bikes))
     let td = document.querySelector(`#a${id}`)
-    
+
     var i = td.parentNode.rowIndex;
     document.querySelector(td.className == "rented" ? "#rentedTable" : "#fixTable").deleteRow(i)
     let table = document.querySelector("#stockTable")
     table.innerHTML += `
-            <tr >
+            <tr class="align-middle text-center">
                 <th scope="row" id="a${id}" class="free">${id}</th>
                 <td>
                     <button value="arrendar" class="btn btn-primary" onclick="arrendar('${id}')" ><img src="https://img.icons8.com/ios/50/ffffff/exit.png" width="20" height="20"/></button>
@@ -114,7 +114,7 @@ function arrendar(id) {
     localStorage.setItem("bikes", JSON.stringify(bikes))
     let table = document.querySelector("#rentedTable")
     table.innerHTML += `
-            <tr >
+            <tr class="align-middle text-center">
                 <th scope="row" id="a${id}" class="rented">${id}</th>
                 <td>
                     <button value="arrendar" class="btn btn-primary" onclick="devolver('${id}')" ><img src="https://img.icons8.com/material-outlined/48/ffffff/return.png" width="20" height="20"/></button>
