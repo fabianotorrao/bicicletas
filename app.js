@@ -1,4 +1,8 @@
 let bikes = []
+let history = []
+if (localStorage.getItem('history')) {
+    history = JSON.parse(localStorage.getItem("history"))
+}
 if (localStorage.getItem('bikes')) {
     bikes = JSON.parse(localStorage.getItem("bikes"))
 }
@@ -71,6 +75,39 @@ window.addEventListener("load", function (event) {
     }
 
 })
+function injectHistory() {
+
+    let modalContent = document.querySelector('.modal-body')
+
+    appendString = `<div "><table class="table  table-striped table-bordered align-middle text-center" >
+    <thead>
+      <tr class="">
+        <th scope="col">Id</th>
+        <th scope="col">Data</th>
+        <th scope="col">Hora</th>
+      </tr>
+      
+    </thead>`
+
+    history.forEach(record => {
+        appendString += `
+        <tr>
+            <td>${record.id}</td>
+            <td>${record.date}</td>
+            <td>${record.time}</td>
+        
+        </tr>`
+
+    });
+
+
+    appendString += `</table></div>`
+    modalContent.innerHTML = appendString
+
+
+
+
+}
 function reparar(id) {
     bikes.map(bike => bike.id == id ? bike.state = "fix" : bike)
     let td = document.querySelector(`#a${id}.free`)
@@ -93,6 +130,11 @@ function devolver(id) {
     localStorage.setItem("bikes", JSON.stringify(bikes))
     let td = document.querySelector(`#a${id}`)
 
+    var today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    history.push({ id: id, date: date, time: time })
+    localStorage.setItem('history', JSON.stringify(history))
     var i = td.parentNode.rowIndex;
     document.querySelector(td.className == "rented" ? "#rentedTable" : "#fixTable").deleteRow(i)
     let table = document.querySelector("#stockTable")
