@@ -9,7 +9,7 @@ if (localStorage.getItem('bikes')) {
 document.querySelector("#add").addEventListener("click", function (event) {
 
     let bikeId = prompt("Insira o numero ou nome da bicicleta sem espaços :")
-    if (bikeId && bikes.filter(bike => bike.id == bikeId).length == 0) {
+    if (bikeId && bikes.filter(bike => bike.id == bikeId).length == 0&&bikeId.split(' ').length==1) {
         let bike = { id: bikeId, state: true }
         bikes.push(bike)
         localStorage.setItem('bikes', JSON.stringify(bikes))
